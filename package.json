@@ -1,0 +1,24 @@
+{
+  "name": "lezy-push",
+  "version": "0.1.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "fuck": "cli.js"
+  },
+  "keywords": [
+    "fuck"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "log-update": "^3.1.0",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
+    "update-notifier": "^2.5.0"
+  }
+}
