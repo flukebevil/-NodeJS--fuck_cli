@@ -42,7 +42,8 @@ if (helperSeletion[2] !== undefined) {
   } else {
     shell("git", ["add", "."]).then(_ => {
       logUpdate(`\n ${chalk.green("✔")} Git added! `);
-      const commitMessage = helperSeletion.filter((res, index) => index !== 1);
+      const commitMessage = helperSeletion
+        .filter((res, index) => index > 0).toString
       shell("git", ["commit", "-m", commitMessage]).then(_ => {
         logUpdate(`\n ${chalk.green("✔")} Git commited! `);
         shell("git", ["push"]).then(_ => {
