@@ -15,7 +15,9 @@ const shell = (command, subCommand) => {
     });
 
     gitPush.stderr.on("data", data => {
-      log(chalk.green(data));
+      if (data.toString().search("git push --set-upstream") !== -1)
+        log(chalk.red(data.toString()));
+      else log(chalk.green(data));
     });
 
     gitPush.on("close", _ => {
@@ -25,7 +27,27 @@ const shell = (command, subCommand) => {
 };
 
 if (helperSeletion[2] !== undefined) {
-  if (shelljs.exec("git remote").code !== 0) {
+  if (helperSeletion[2] === "-b") {
+    let branchName = helperSeletion
+      .filter((_, index) => index > 2)
+      .join(" and ")
+      .trim();
+    if (branchName.split(" ").length === 1) {
+      logUpdate(`\n ${chalk.green("✔")} Started! \n`);
+      shell("git", ["branch", branchName]).then(_ => {
+        logUpdate(`\n ${chalk.green("✔")} Created! \n`);
+        shell("git", ["checkout", branchName]).then(_ =>
+          logUpdate(`\n ${chalk.green("✔")} Done! \n`)
+        );
+      });
+    } else {
+      logUpdate(
+        chalk.red(
+          "<< Dudeeeeeee branch name must not have fucking null space !! >>"
+        )
+      );
+    }
+  } else if (shelljs.exec("git remote").code !== 0) {
     log(`\n You need to use follow this first \n`);
     log(`👉🏻 ${chalk.green("git init")}`);
     log(`👉🏻 ${chalk.green("git remote add origin <remote repository URL>")}`);
@@ -43,14 +65,12 @@ if (helperSeletion[2] !== undefined) {
     shell("git", ["add", "."]).then(_ => {
       logUpdate(`\n ${chalk.green("✔")} Git added! `);
       const commitMessage = helperSeletion.filter((res, index) => index > 1);
-      shell("git", ["commit", "-m", commitMessage.toString().replace(",", " ")]).then(
-        _ => {
-          logUpdate(`\n ${chalk.green("✔")} Git commited! `);
-          shell("git", ["push"]).then(_ => {
-            logUpdate(`\n ${chalk.green("✔")} finished! \n`);
-          });
-        }
-      );
+      shell("git", ["commit", "-m", commitMessage.join(" and ")]).then(_ => {
+        logUpdate(`\n ${chalk.green("✔")} Git commited! `);
+        shell("git", ["push"]).then(_ => {
+          logUpdate(`\n ${chalk.green("✔")} finished! \n`);
+        });
+      });
     });
   }
 } else {
