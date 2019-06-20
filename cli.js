@@ -27,7 +27,9 @@ const shell = (command, subCommand) => {
 };
 
 if (helperSeletion[2] !== undefined) {
-  if (shelljs.exec("git remote").code !== 0) {
+  if (helperSeletion[2] === "-b") {
+    console.log(helperSeletion)
+  } else if (shelljs.exec("git remote").code !== 0) {
     log(`\n You need to use follow this first \n`);
     log(`👉🏻 ${chalk.green("git init")}`);
     log(`👉🏻 ${chalk.green("git remote add origin <remote repository URL>")}`);
