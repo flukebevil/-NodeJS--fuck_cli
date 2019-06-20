@@ -15,10 +15,9 @@ const shell = (command, subCommand) => {
     });
 
     gitPush.stderr.on("data", data => {
-      log(chalk.yellow(data));
-      // if (data.toString().search("git push --set-upstream"))
-      //   log(chalk.red(data.toString()));
-      // else log(chalk.yellow(data));
+      if (data.toString().search("git push --set-upstream"))
+        log(chalk.red(data.toString()));
+      else log(chalk.green(data));
     });
 
     gitPush.on("close", _ => {
