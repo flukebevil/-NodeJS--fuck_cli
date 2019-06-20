@@ -28,7 +28,16 @@ const shell = (command, subCommand) => {
 
 if (helperSeletion[2] !== undefined) {
   if (helperSeletion[2] === "-b") {
-    console.log(helperSeletion)
+    let branchName = helperSeletion
+      .filter((_, index) => index > 2)
+      .join(" and ");
+    logUpdate(`\n ${chalk.green("✔")} Started! \n`);
+    shell("git", ["branch", branchName]).then(_ => {
+      logUpdate(`\n ${chalk.green("✔")} Created! \n`);
+      shell("git", ["checkout", branchName]).then(_ =>
+        logUpdate(`\n ${chalk.green("✔")} Done! \n`)
+      );
+    });
   } else if (shelljs.exec("git remote").code !== 0) {
     log(`\n You need to use follow this first \n`);
     log(`👉🏻 ${chalk.green("git init")}`);
@@ -47,11 +56,7 @@ if (helperSeletion[2] !== undefined) {
     shell("git", ["add", "."]).then(_ => {
       logUpdate(`\n ${chalk.green("✔")} Git added! `);
       const commitMessage = helperSeletion.filter((res, index) => index > 1);
-      shell("git", [
-        "commit",
-        "-m",
-        commitMessage.toString().replace(",", " ")
-      ]).then(_ => {
+      shell("git", ["commit", "-m", commitMessage.join(" and ")]).then(_ => {
         logUpdate(`\n ${chalk.green("✔")} Git commited! `);
         shell("git", ["push"]).then(_ => {
           logUpdate(`\n ${chalk.green("✔")} finished! \n`);
