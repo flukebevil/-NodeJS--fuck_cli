@@ -57,4 +57,7 @@ if (helperSeletion[2] !== undefined) {
   log(`
     ${chalk.green("Usage")} : fuck <"message">
     `);
+    log(`
+    ${chalk.green("Usage")} : fuck -b <"branch name">
+    `);
 }
