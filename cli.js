@@ -15,7 +15,7 @@ const shell = (command, subCommand) => {
     });
 
     gitPush.stderr.on("data", data => {
-      log(chalk.green(data));
+      log(chalk.yellow(data));
     });
 
     gitPush.on("close", _ => {
