@@ -16,8 +16,7 @@ const shell = (command, subCommand) => {
 
     gitPush.stderr.on("data", data => {
       log(chalk.yellow(data));
-      if (data.toString().search('git push --set-upstream')) log('hello')
-      process.exit(0)
+      if (data.toString().search("git push --set-upstream")) shell(data);
     });
 
     gitPush.on("close", _ => {
@@ -45,14 +44,16 @@ if (helperSeletion[2] !== undefined) {
     shell("git", ["add", "."]).then(_ => {
       logUpdate(`\n ${chalk.green("✔")} Git added! `);
       const commitMessage = helperSeletion.filter((res, index) => index > 1);
-      shell("git", ["commit", "-m", commitMessage.toString().replace(",", " ")]).then(
-        _ => {
-          logUpdate(`\n ${chalk.green("✔")} Git commited! `);
-          shell("git", ["push"]).then(_ => {
-            logUpdate(`\n ${chalk.green("✔")} finished! \n`);
-          });
-        }
-      );
+      shell("git", [
+        "commit",
+        "-m",
+        commitMessage.toString().replace(",", " ")
+      ]).then(_ => {
+        logUpdate(`\n ${chalk.green("✔")} Git commited! `);
+        shell("git", ["push"]).then(_ => {
+          logUpdate(`\n ${chalk.green("✔")} finished! \n`);
+        });
+      });
     });
   }
 } else {
