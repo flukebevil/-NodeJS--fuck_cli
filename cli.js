@@ -30,7 +30,7 @@ if (helperSeletion[2] !== undefined) {
   if (helperSeletion[2] === "-b") {
     let branchName = helperSeletion
       .filter((_, index) => index > 2)
-      .join(" and ")
+      .join(" ")
       .trim();
     if (branchName.split(" ").length === 1) {
       logUpdate(`\n ${chalk.green("✔")} Started! \n`);
@@ -65,7 +65,7 @@ if (helperSeletion[2] !== undefined) {
     shell("git", ["add", "."]).then(_ => {
       logUpdate(`\n ${chalk.green("✔")} Git added! `);
       const commitMessage = helperSeletion.filter((res, index) => index > 1);
-      shell("git", ["commit", "-m", commitMessage.join(" and ")]).then(_ => {
+      shell("git", ["commit", "-m", commitMessage.join(" ")]).then(_ => {
         logUpdate(`\n ${chalk.green("✔")} Git commited! `);
         shell("git", ["push"]).then(_ => {
           logUpdate(`\n ${chalk.green("✔")} finished! \n`);
