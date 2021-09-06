@@ -1,5 +1,5 @@
 # How to fucking use it
- - Install it `npm i lezy-push`
+ - Install it `npm i -g lezy-push`
  - Then `fuck <"commit message">`
  `Ex. fuck "update"`
 # New feature
